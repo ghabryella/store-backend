@@ -7,8 +7,10 @@ import com.baozi.store.repository.ClienteRepository;
 import com.baozi.store.repository.PedidoRepository;
 import com.baozi.store.repository.ProdutoRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -42,7 +44,7 @@ public class PedidoController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Pedido> buscarPedidoId(@PathVariable Long id) {
-        Pedido pedido = pedidoRepository.findById(id).orElseThrow(() -> new RuntimeException("Pedido não existe."));
+        Pedido pedido = pedidoRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Pedido não existe."));
 
 
         return ResponseEntity.ok(pedido);

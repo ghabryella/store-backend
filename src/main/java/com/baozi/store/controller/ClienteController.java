@@ -2,8 +2,10 @@ package com.baozi.store.controller;
 
 import com.baozi.store.model.Cliente;
 import com.baozi.store.repository.ClienteRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -30,7 +32,7 @@ public class ClienteController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Cliente> buscarClienteId(@PathVariable Long id) {
-        Cliente cliente = clienteRepository.findById(id).orElseThrow(() -> new RuntimeException("Cliente não existe."));
+        Cliente cliente = clienteRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não existe."));
         return ResponseEntity.ok(cliente);
     }
 

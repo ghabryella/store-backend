@@ -2,8 +2,10 @@ package com.baozi.store.controller;
 
 import com.baozi.store.model.Produto;
 import com.baozi.store.repository.ProdutoRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -30,7 +32,7 @@ public class ProdutoController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Produto> buscarProdutoId(@PathVariable Long id) {
-        Produto produto = produtoRepository.findById(id).orElseThrow(() -> new RuntimeException("Produto não existe."));
+        Produto produto = produtoRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Produto não existe."));
         return ResponseEntity.ok(produto);
     }
 
